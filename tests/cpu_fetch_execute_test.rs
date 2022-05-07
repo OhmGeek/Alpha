@@ -1,19 +1,5 @@
 use alpha::Cpu;
 
-#[test]
-fn it_increments_program_counter() {
-    // Given we read an opcode of zero (and pc is 0)
-    let mut cpu = Cpu {
-        pc: 0,
-        memory: [0; 4096],
-        r: [0;32],
-        fr: [0;32]
-    };
-    // When we execute
-    cpu.execute_cycle();
-    // Then we should increase the program counter
-    assert_eq!(cpu.pc, 1);
-}
 
 #[test]
 #[should_panic]
@@ -47,6 +33,8 @@ fn it_should_handle_lda_with_zero_address_displacement() {
     // After we execute, expect the data to have been loaded.
     cpu.execute_cycle();
     assert_eq!(0x5, cpu.r[2]);
+    // Finally, we should have moved to the next program counter value.
+    assert_eq!(1, cpu.pc)
 }
 
 fn to_inst(opcode: u64, ra: u64, rb: u64) -> u64 {

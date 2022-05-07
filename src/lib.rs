@@ -34,6 +34,8 @@ impl Cpu {
             0x0a => self.op_ldbu(),
             _ => panic!("Error, unimplemented opcode {}", op),
         }
+        // Increment the program counter
+        self.pc += 1;
     }
 
     fn call_pal(&mut self) {
